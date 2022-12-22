@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../includes/head.ejs')%>
+<body>
+    <%- include('../includes/userNav.ejs') %>
+        <main>
+            <% if (products.length > 0) { %>
+                <ul class="cart__item-list">
+                    <% products.forEach(item => { %>
+                        <li class="cart__item">
+                            <h1><%= item.productId.title %></h1>
+                            <h1><%= item.productId.price %></h1>
+                            <h2>Quantity: <%= item.quantity %></h2>
+                        </li>
+                    <% }) %>
+                </ul>
+                <h3 class="centered">Total: <%= total %></h3>
+                 <hr>
+                <div class="centered">
+                    <form action="/create-order" method="POST">
+                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                        <button type="submit" class="btn">Order Now</button>
+                    </form>
+                </div>
+            <% } else { %>
+                <h1>No Products in Cart!</h1>
+            <% } %>
+        </main>
+
+</body>
+
+</html>

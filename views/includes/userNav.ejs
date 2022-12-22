@@ -1,0 +1,114 @@
+<!-- Nav for Large Screen -->
+    <nav class="min-w-full flex justify-between items-center py-8 lg:py-6 lg:px-20 bg-blue-200"> 
+        <!--Left Part-->
+       <div class="hidden lg:flex flex-wrap justify-start items-center space-x-10">
+            <a href="/"><h3 class="font-bold text-xl rounded-lg px-4 py-2 bg-indigo-400 text-white">G-Hut</h3></a>
+            <a href="" class="flex items-center transition duration-200 border-black border-b-2 border-opacity-0 hover:border-opacity-100">
+                <p class="pr-1">Home</p><span class="material-symbols-outlined">home</span>
+            </a>
+            <a href="" class="flex items-center transition duration-200 border-black border-b-2 border-opacity-0 hover:border-opacity-100">
+                <p class="pr-1">Smart Phones</p><span class="material-symbols-outlined">smartphone</span>
+            </a>
+            <a href="" class="flex items-center transition duration-200 border-black border-b-2 border-opacity-0 hover:border-opacity-100">
+                <p class="pr-2">PC </p><span class="material-symbols-outlined"> laptop_mac</span>
+            </a>
+            <a href="" class="flex items-center transition duration-200 border-black border-b-2 border-opacity-0 hover:border-opacity-100">
+                <p class="pr-2">Accessories</p><span class="material-symbols-outlined">extension</span>
+           </a>
+        </div>
+        <!--Right Part-->
+        <div class="hidden lg:flex flex-wrap space-x-6 items-center">
+            <% if(isCustomer && isLoggedIn) { %>
+            <!-- Cart icon -->
+            <a class="flex justify-center space-x-1 transition duration-200 border-b-2 border-opacity-0 hover:border-opacity-100 border-black" href="/cart"> 
+                <p>Cart</p> <p class="material-symbols-outlined">shopping_cart</p> <p class="font-bold">(1250)</p>
+            </a>
+            <!-- Whishlist icon -->
+            <a class="flex justify-center space-x-1 transition duration-200 border-b-2 border-opacity-0 hover:border-opacity-100 border-black" href=""> 
+                <p class="material-symbols-outlined">heart_plus</p> 
+            </a>
+            <!-- Order icon -->
+            <a class="flex justify-center space-x-1 transition duration-200 border-b-2 border-opacity-0 hover:border-opacity-100 border-black" href=""> 
+                <p class="material-symbols-outlined">list_alt</p> 
+            </a>
+            <!-- Profile icon -->
+            <a class="flex justify-center space-x-1 transition duration-200 border-b-2 border-opacity-0 hover:border-opacity-100 border-black" href=""> 
+                <p class="material-symbols-outlined">person</p>
+            </a>
+            <!-- Logout icon -->
+            <a class="flex justify-center space-x-1 transition duration-200 border-b-2 border-opacity-0 hover:border-opacity-100 border-black" href=""> 
+                <form action="/logout" method="POST">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                    <button type="submit" class="material-symbols-outlined">logout</button type="submit">
+                </form>
+            </a>
+           <% } %>
+            <% if(isSeller && isLoggedIn) { %>
+            <a href="" class="flex items-center justify-center px-3 py-2 rounded-lg font-bold bg-blue-500 text-white">
+                <p>My Products</p>
+            </a>
+            <a href="" class="flex items-center justify-center px-3 py-2 rounded-lg font-bold bg-blue-500 text-white">
+                <p>Order Received</p>
+            </a>
+            <a href="" class="flex items-center justify-center px-3 py-2 rounded-lg font-bold bg-blue-500 text-white">
+                <p>Add Product</p>
+            </a>
+            <!-- Logout icon -->
+            <a class="flex justify-center space-x-1 transition duration-200 border-b-2 border-opacity-0 hover:border-opacity-100 border-black" href=""> 
+                <form action="/logout" method="POST">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                    <button type="submit" class="material-symbols-outlined">logout</button type="submit">
+                </form>
+            </a>
+
+            <% } %>
+            
+            <% if(!isLoggedIn) { %>
+            <a href="/login" class="px-4 py-2 rounded-lg font-bold text-white hover:bg-cyan-300 bg-cyan-500">Login</a>
+            <a href="/signup" class="px-4 py-2 rounded-lg font-bold text-white hover:bg-cyan-300 bg-cyan-500">Sign up</a>
+            <% } %>
+
+
+
+        </div>
+    </nav>        
+
+    <!-- Nav for Mobile and Medium Screen -->
+    <nav class="lg:hidden min-w-full grid grid-cols-3 pt-4">
+        <div class="flex justify-start items-start space-x-4 pl-4">
+            <!-- Cart icon -->
+            <div>
+                <span class="material-symbols-outlined">shopping_cart</span>
+            </div>
+            <!-- Whishlist icon -->
+            <div>
+                <span class="material-symbols-outlined">heart_plus</span>
+            </div>
+            <!-- Category icon -->
+            <div>
+                <span class="material-symbols-outlined">category</span>
+            </div>
+        </div>
+
+        <!-- Logo -->
+        <div>
+            <p class="text-lg font-bold">G-Hut</p>
+        </div>
+
+        <!-- Menu icon -->
+        <div class="flex justify-end space-x-2 pr-4">
+            <button id="menu-btn" class="lg:hidden focus:outline-none hamburger">
+                <span class="hamburger-top"></span>
+                <span class="hamburger-middle"></span>
+                <span class="hamburger-bottom"></span>
+            </button>
+        </div>
+    </nav>
+    <!-- Nav items -->
+    <div id="menu"  class="hidden pt-20 min-w-full min-h-screen flex-col text-center text-black bg-yellow-400">
+        <a href="#" class="hover:text-gray-400 border-b pb-4 border-gray-400 mx-12">Features</a>
+        <a href="#" class="hover:text-gray-400 border-b pb-4 border-gray-400 mx-12">Download</a>
+        <a href="#" class="hover:text-gray-400 border-b pb-4 border-gray-400 mx-12">FAQ</a>
+        <a href="#" class="px-6 py-3 border rounded-lg mx-4 hover:text-gray-400">Resources</a>
+    </div>
+    <script src="/js/navbar.js"></script>

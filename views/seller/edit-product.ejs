@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../includes/head.ejs')%>
+<body>
+    <%- include('../includes/userNav.ejs') %>
+    <!-- <main>
+        <% if(errorMessage) { %>
+            <div class="user-message user-message--error"><%= errorMessage %></div>
+         <% } %>
+        <form class="product-form" action="/seller/<%= action %>" method="POST" enctype="multipart/form-data">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <div class="form-control">
+                <label for="title">Title</label>
+                <input class="<%= errorField === 'title' ? 'invalid' : '' %>" 
+                    type="text" name="title" id="title" value="<%= product.title %>">
+            </div>
+            <div class="form-control">
+                <label for="image">Image</label>
+                <input class="<%= errorField === 'image' ? 'invalid' : '' %>"  
+                    type="file" name="image" id="image">
+            </div>
+            <div class="form-control">
+                <label for="price">Price</label>
+                <input class="<%= errorField === 'price' ? 'invalid' : '' %>" 
+                    type="number" name="price" id="price" step="0.01" value="<%= product.price %>">
+            </div>
+            <div class="form-control">
+                <label for="description">Description</label>
+                <textarea class="<%= errorField === 'description' ? 'invalid' : '' %>" 
+                    name="description" id="description" rows="5"><%= product.description %></textarea>
+            </div>
+            <% if (edit) { %>
+                <input type="hidden" name="productId" value="<%= product._id %>">
+                <% } %>
+            <button class="btn" type="submit"><%= btnTxt %></button>
+        </form>
+    </main> -->
+
+
+     
+    <!-- Add/Edit Product -->
+    <section>
+        `<form action="/seller/<%= action %>" method="POST" enctype="multipart/form-data" class="max-w-xl mx-auto px-8 py-28 space-y-8">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <% if(errorMessage) { %>
+                <div class="max-w-4xl mx-auto p-4 font-bold text-center text-red-500"><%= errorMessage %></div>
+            <% } %>
+            <!-- Title -->
+            <div class="flex justify-center items-center <%= errorField === 'title' ? 'border-red-500' : '' %> bg-blue-200 rounded-l-xl border border-blue-200">
+                <label for="title" class="font-semibold px-2">Title: </label>
+                <input type="text" name="title" id="title" value="<%= product.title %>" placeholder="Product Title" 
+                    class="text-center p-2 w-full focus:outline-none">
+            </div>
+
+            <!-- Category -->
+            <div class="flex border rounded-l-xl bg-blue-200 border-blue-200">
+                <p class="p-2 md:w-24 font-semibold text-center rounded-l-xl bg-blue-200">Category</p>
+                <label class="flex radio items-center pl-4 cursor-pointer bg-white">
+                    <input type="radio" name="category" onchange="catFunc('smartphone')">Smartphone
+                </label>
+                <label class="flex radio items-center pl-4 cursor-pointer bg-white">
+                    <input type="radio" name="category" onchange="catFunc('laptop')">Laptop
+                </label>
+                <label class="flex radio items-center pl-4 cursor-pointer w-full bg-white">
+                    <input type="radio" name="category" onchange="catFunc('accessories')">Accessories
+                </label>
+            </div>
+
+            <!-- Sub Category -->
+            <div class="flex justify-start items-center rounded-l-xl bg-blue-200 border border-blue-200">
+                <label for="subCategory" class="px-2 font-semibold bg-blue-200">Subcategory</label>
+                <select id="subCategory" onchange="subCat(this)" class="mx-auto w-full p-2 focus:outline-none">
+                    <option class="mx-auto bg-black" value="">Select</option>
+                </select>
+            </div>
+            
+            <!-- Brand -->
+            <div class="flex justify-start items-center text-center rounded-l-xl bg-blue-200 border border-blue-200">
+                <label for="brand" class="px-2 font-semibold">Brand</label>
+                <select id="brand" class="mx-auto w-full p-2 focus:outline-none">
+                    <option value="">Select</option>
+                </select>
+            </div>
+
+            <!-- Price -->
+            <div class="flex justify-center items-center rounded-l-xl <%= errorField === 'price' ? 'border-red-500' : '' %> bg-blue-200 border border-blue-200">
+                <label for="title" class="font-semibold px-2">Price: </label>
+                <input type="number" name="price" id="price" step="0.01" value="<%= product.price %>" placeholder="Product Price" 
+                    class="text-center p-2 w-full focus:outline-none">
+            </div>
+
+            <!-- Image -->
+            <div class="flex justify-center items-center rounded-l-xl bg-blue-200 border border-blue-200">
+                <label for="title" class="font-semibold px-2">Image </label>
+                <input type="file" name="image" id="image" class="text-center bg-white mx-auto self-end p-1 w-full focus:outline-none">
+            </div>
+             
+            <!-- Description -->
+            <label for="description" class="flex flex-col justify-center items-start">
+                <p class="p-2 font-semibold w-24 text-center rounded-xl bg-blue-200">Description:</p>
+                <textarea name="description" id="description" rows="5" cols="33" class="border-4 <%= errorField === 'description' ? 'border-red-500' : '' %> w-full focus:outline-none mt-4 border-blue-200"> <%= product.description %> </textarea>
+            </label>
+
+            <% if (edit) { %>
+                <input type="hidden" name="productId" value="<%= product._id %>">
+                <% } %>
+            <button class="px-3 py-2 font-bold rounded-lg mx-auto bg-blue-200 text-black" type="submit"><%= btnTxt %></button>
+
+        </form>
+    </section>
+
+    <script>
+        let Brand = []
+        let subcatList = []
+        const catFunc = (cat) => {
+            const category = ['smartphone', 'laptop', 'accessories']
+            let subCategory = document.getElementById('subCategory')
+            subCategory.innerText = ''
+            switch(cat) {
+                case 'smartphone':
+                    subcatList = ['Select' , 'Android', 'iPhone']
+                    break
+                case 'laptop':
+                    subcatList = ['Select' , 'Mac', 'Windows', 'Linux', 'DOS']
+                    break
+                case 'accessories':
+                    subcatList = ['Select' , 'Earbud', 'Cable', 'Charger', 'Headphone']
+                    break
+            }
+            subcatList.forEach((item, index) => {
+                let newOp = document.createElement("option")
+                newOp.innerText = item
+                if(index !== 0){
+                    newOp.setAttribute('name', item.toLowerCase())
+                    newOp.setAttribute('value', item.toLowerCase())
+                }
+                subCategory.appendChild(newOp)
+            })
+
+            if(cat === 'laptop' && subCategory.value !== 'mac') {
+                Brand = [ 'Select', 'HP', 'Dell', 'Asus', 'Lenevo']
+            } else {
+                Brand = [ 'Select', 'Samsung', 'Oneplus', 'Oppo', 'Vivo', 'Realme', 'Xiaomi']
+            }
+            const brandDiv = document.getElementById('brand')
+            let option = document.createElement('option')
+            option.innerText = ''
+            brandDiv.appendChild(option)
+        }
+        const subCat = (item) => {
+            let brandDiv = document.getElementById('brand')
+            if(item.value === 'iphone' || item.value === 'mac') {
+                brandDiv.innerText = ''
+                let option = document.createElement('option')
+                option.innerText = 'Apple'
+                brandDiv.appendChild(option)
+            } else {
+                brandDiv.innerText = ''
+                Brand.forEach( (item, index) => {
+                let option = document.createElement('option')
+                option.innerText = item
+                if(index !==0 ){
+                    option.setAttribute('value', item.toLowerCase())
+                }
+                brandDiv.appendChild(option)
+            })
+            }
+        }
+    </script>
+
+
+
+
+</body>
+</html>

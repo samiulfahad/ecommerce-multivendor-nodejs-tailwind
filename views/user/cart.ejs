@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../includes/head.ejs')%>
+<body>
+    <%- include('../includes/userNav.ejs')%>
+  <section>
+    <div class="max-w-4xl mx-auto shadow-2xl mt-28">
+      <% if (products.length > 0) { %>
+        <div class="text-xl font-bold mx-auto text-center">
+          Your Have <%= products.length %> products
+        </div>
+        <div class="mx-auto max-w-2xl">
+            <% products.forEach( product => { %>
+            <p> Name:<%= product.productId.title %> <br>  Price:<%= product.productId.price %></p>
+            <img src="<%=product.productId.imageURL %>" alt="">
+            <% }); %> 
+        </div>
+        
+      <% } else { %>
+        <div class="text-xl font-bold mx-auto text-center">
+          Your Cart is Empty
+        </div>
+
+      <% } %>
+    </div>
+  </section>
+     
+</body>
+</html>
+
